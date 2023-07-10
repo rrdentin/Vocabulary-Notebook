@@ -1,0 +1,9 @@
+<div id="error-msg" class="container">
+    <h5>{{ msg }}</h5>
+    {% if request.args.getlist('suggestions') %}
+        {% for suggestion in request.args.getlist('suggestions') %}
+        <a class="btn btn-primary mb-2 me-2"  href="{{ url_for('detail', keyword=suggestion) }}" onmouseover="this.style.color='black'" onmouseout="this.style.color='white'">{{ suggestion }}</a>
+
+        {% endfor %}
+    {% endif %}
+</div>

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:title" content="My Word List" />
+    <meta property="og:description" content="The greatest list of them all" />
+    <meta property="og:image" content="{{url_for('static', filename='logo_red.png') }}" />
+
+    <link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}" type="image/x-icon" />
+    <link rel="icon" href="{{url_for('static', filename='favicon.ico')}}" type="image/x-icon" />
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>Personal Diary</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"
+        integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <link href="{{ url_for('static', filename='mystyle.css') }}" rel="stylesheet" />
+    <script>
+
+        let words = {{ words | tojson }};
+        let word_list = [];
+        for (let i = 0; i < words.length; i++) {
+            word_list.push(words[i].word)
+        }
+
+        function find_word() {
+            $('#error-msg').hide();
+            let word = $('#input-word').val().toLowerCase().trim();
+            if (!word) {
+                alert('Please enter a word');
+                return;
+            }
+            if (word_list.includes(word)) {
+                let row = $(`#word-${word}`);
+                row.addClass('highlight');
+                row.siblings().removeClass('highlight');
+                row[0].scrollIntoView();
+            } else {
+                window.location.href = `/detail/${word}?status_give=new`;
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="banner" onclick="window.location.href = '/';">
+        </div>
+
+        <div class="search-box d-flex justify-content-center">
+            <input id="input-word" class="form-control" style="margin-right: 0.5rem;" />
+            <button class="btn btn-light" onclick="find_word()">
+                SEARCH
+            </button>
+        </div>
+
+        {% if msg %}
+            {% include 'error.html' %}
+        {% endif %}
+
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col" style="width: 30%;">WORD</th>
+                    <th scope="col">MEANING</th>
+                </tr>
+            </thead>
+            <tbody id="tbody-box">
+                {% for word in words %}
+                    {% set definition = word.definition %}
+                    {% set word = word.word %}
+                    <tr id="word-{{word}}">
+                        <td><a href="/detail/{{word}}?status_give=old">{{word}}</a></td>
+                        <td>This is the meaning of the word</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <footer class="py-3 my-4">
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+            <li class="nav-item"><a href="/detail/example" class="nav-link px-2 text-body-secondary">Detail Page</a>
+            </li>
+
+        </ul>
+        <p class="text-center text-body-secondary">© 2023 Rr. Denti N</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>
