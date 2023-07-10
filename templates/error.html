@@ -1,9 +1,24 @@
 <div id="error-msg" class="container">
     <h5>{{ msg }}</h5>
     {% if request.args.getlist('suggestions') %}
-        {% for suggestion in request.args.getlist('suggestions') %}
-        <a class="btn btn-primary mb-2 me-2"  href="{{ url_for('detail', keyword=suggestion) }}" onmouseover="this.style.color='black'" onmouseout="this.style.color='white'">{{ suggestion }}</a>
+    {% for suggestion in request.args.getlist('suggestions') %}
+    <a class="btn btn-primary mb-2 me-2" href="{{ url_for('detail', keyword=suggestion) }}"
+        onmouseover="this.style.color='black'" onmouseout="this.style.color='white'">{{ suggestion }}</a>
 
-        {% endfor %}
+    {% endfor %}
     {% endif %}
 </div>
+
+<style>
+    .btn-primary {
+        background-color: #e8344e;
+        border-color: #e8344e;
+    }
+
+    .btn-primary:hover {
+        background-color: #e8344e;
+        border-color: #e8344e;
+
+        filter: brightness(0.8);
+    }
+</style>
