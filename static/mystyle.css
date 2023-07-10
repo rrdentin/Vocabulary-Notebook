@@ -57,6 +57,7 @@ span.example {
     max-width: 800px;
     margin: auto;
     table-layout: fixed;
+    border-collapse: collapse;
 }
 
 .table th {
@@ -70,10 +71,17 @@ td {
     white-space: nowrap;
 }
 
-td > a, a:visited, a:hover, a:active {
+td > a, 
+a:visited,
+a:active {
     color: black;
+    text-decoration: none;
 }
 
+td > a:hover {
+    color: black;
+    text-decoration: underline;
+}
 thead:first-child tr:first-child th:first-child {
     border-radius: 10px 0 0 0;
 }
@@ -90,11 +98,22 @@ tbody:last-child tr:last-child td:last-child {
     border-radius: 0 0 10px 0;
 }
 
-tr.highlight > td {
+tr.highlight>td {
     background-color: orange;
     color: white;
 }
 
-tr.highlight a{
+tr.highlight a {
     color: white;
+}
+
+.table .thead-light th {
+    color: #495057;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+
+.table td, .table th {
+    padding: .75rem;
+    
 }
